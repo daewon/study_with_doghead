@@ -71,14 +71,27 @@ public class DaewonList {
     }
 
     /**
-     * targe 노드를 src 노드 뒤로 삽입
+     * src 노드를  target 노드 뒤로 삽입
      */
-    public SingleLinkedList<T> insertAfter(Node<T> src, Node<T> target) {
+    public SingleLinkedList<T> insertAfter(Node<T> newNode, Node<T> target) {
       Node<T> node = this.head;
       while (node != null) {
-        if (node == src) {
-          target.next = node.next;
-          node.next = target;
+        if (node == target) {
+          newNode.next = node.next;
+          node.next = newNode;
+          break;
+        }
+        node = node.next;
+      }
+      
+      return this;
+    }
+
+    public SingleLinkedList<T> remove(Node<T> target) {
+      Node<T> node = this.head;
+      while (node != null) {
+        if (node.next == target) {
+          node.next = target.next;
           break;
         }
         node = node.next;
@@ -150,9 +163,13 @@ public class DaewonList {
     it.next(); // 2
     it.next(); // 3
     it.next(); // 4
-    // inserrt Node(-1) after 5
-    sll.insertAfter(it.next(), new Node(-1));
     
+    Node<Integer> newNode = new Node(-1);
+    // inserrt Node(-1) after 5
+    sll.insertAfter(newNode, it.next());
+    System.out.println(sll);
+    
+    sll.remove(newNode);
     System.out.println(sll);
   }
 }
