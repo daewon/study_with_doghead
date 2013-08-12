@@ -1,4 +1,4 @@
 study_with_doghead
 ==================
 
-algorythm study with doghead
+algorithm study with doghead
