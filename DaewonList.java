@@ -1,81 +1,123 @@
 public class DaewonList {
+  
   static class Node<T> {
-    protected T value;
-    protected Node next;
-
-    // getter and setter
-    public T getValue() { return value; };
-    public void setValue(T value) { this.value = value; };
+    private T value;
+    private Node next;
     
-    public Node getNext() { return this.next; }
-    public void setNext(Node<T> next) { this.next = next; }
-
-    // constructor
+    public T getValue() { return value; };
     public Node(T value) {
       this.value = value;
     }
+
+    @Override public String toString() {
+      return this.value.toString();
+    }
   }
 
-  static interface Proc<T> {
-    public void apply(T input);
+  /**
+   * Iterator
+   * !! Node Value가 아니라 Node를 반환
+   */
+  static class Iterator<T> {
+    private Node<T> current = null;
+   
+    public Iterator(Node<T> node) {
+      this.current = node;
+    }
+
+    public Node<T> getNode() { return this.current; }
+    public boolean hasNext() { return this.current != null; }
+
+
+    // 현재 노드를 반환하고 다음 노드로 이동
+    public Node<T> next() {
+      if (this.hasNext()) {
+        Node<T> node = this.current;
+        this.current = this.current.next;
+        return node;
+      } else {
+        return null;
+      }
+    }
   }
-  
+
+  /**
+   * 단방향 리스트
+   */
   static class SingleLinkedList<T> {
-    private Node<T> head  = null;
-
+    private Node<T> head = null;
+    
     public SingleLinkedList<T> append(T value) {
       Node<T> newNode = new Node(value);
       if (head == null) {
         head = newNode;
       } else {
-        Node<T> lastNode = this.findLast();
+        Node<T> lastNode = this.getLast();
         lastNode.next = newNode;
       }
+      
       return this;
     }
 
-    public Node<T> findLast() {
+    public Iterator<T> getIterator() { return new Iterator(this.head); }
+    
+    private Node<T> getLast() {
       Node<T> node = this.head;
-      while(node.next != null) {
+      while (node.next != null) {
         node = node.next;
       }
+      
       return node;
     }
 
-    public void forEach(Proc<T> proc) {
+    /**
+     * targe 노드를 src 노드 뒤로 삽입
+     */
+    public SingleLinkedList<T> insertAfter(Node<T> src, Node<T> target) {
       Node<T> node = this.head;
-      while(node != null) {
-        proc.apply(node.getValue());
+      while (node != null) {
+        if (node == src) {
+          target.next = node.next;
+          node.next = target;
+          break;
+        }
         node = node.next;
       }
+      
+      return this;
     }
 
-
+    // !! mutable reverse
     private void reverseHelper(Node<T> prev, Node<T> current) {
       if (current.next != null) {
         reverseHelper(current, current.next);
       } else {
-        this.head = current; // set head 
+        this.head = current; // get last node! set head node
       }
+      
       current.next = prev;
     }
-
-    // !! mutable reverse
     public SingleLinkedList<T> reverse() {
-      reverseHelper(null, this.head);
+      if (this.head != null) {
+        reverseHelper(null, this.head);
+      }
+      
       return this;
     }
     
     @Override public String toString() {
-      final StringBuilder sb = new StringBuilder();
-      final String loopDelim = " -> ";
-      forEach(new Proc<T>() {
-          @Override public void apply(T value) {
-            sb.append(value.toString() + loopDelim);
-          }
-        });
-      String str = sb.toString();
-      return str.substring(0, str.length() - loopDelim.length());
+      StringBuilder sb = new StringBuilder();
+      
+      Node<T> node = this.head;
+      while (node != null) {
+        sb.append(node);
+        if (node.next != null){
+          sb.append(" -> ");
+        }
+        node = node.next;
+      }
+      
+      return sb.toString();
     }
   }
   
@@ -91,6 +133,25 @@ public class DaewonList {
     System.out.println(sll);
     
     sll.reverse();
+    
+    System.out.println(sll);
+
+    sll.reverse();
+
+    System.out.println(sll);
+    
+    Iterator<Integer> it = sll.getIterator();
+    while (it.hasNext()) {
+      System.out.println(it.next());
+    }
+
+    it = sll.getIterator();
+    it.next(); // 1
+    it.next(); // 2
+    it.next(); // 3
+    it.next(); // 4
+    // inserrt Node(-1) after 5
+    sll.insertAfter(it.next(), new Node(-1));
     
     System.out.println(sll);
   }
