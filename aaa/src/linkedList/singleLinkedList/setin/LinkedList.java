@@ -4,7 +4,7 @@
 package linkedList.singleLinkedList.setin;
 
 /**
- * @author µÎ¼®
+ * @author ë‘ì„ 
  * 
  */
 public class LinkedList<T> {
