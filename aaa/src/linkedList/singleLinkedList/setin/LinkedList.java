@@ -104,16 +104,20 @@ public class LinkedList<T> {
 		int count = 0;
 		boolean checkIndex = false;
 		Node<T> pNode = node;
-		for (int i = 0; i <= index; i++) {
-			if (i == index) {
-				pNode.next = node.next;
-				checkIndex = true;
-				this.size--;
-				break;
+		if (index == 0) {
+			this.node = node.next;
+		} else {
+			for (int i = 0; i <= index; i++) {
+				if (i == index) {
+					pNode.next = node.next;
+					checkIndex = true;
+					break;
+				}
+				pNode = node;
+				node = node.next;
 			}
-			pNode = node;
-			node = node.next;
 		}
+		minusSize();
 		return checkIndex;
 	}
 
@@ -164,11 +168,10 @@ public class LinkedList<T> {
 
 		stringList.printData(); // 삭제됬는지 확인
 
-		//TODO 0번째 리스트를 삭제하는 경우 제대로 동작이 되지 않음.
 		stringList.delete(0);
-		
+
 		stringList.printData();
-		
+
 		stringList.emptyList();
 
 		stringList.printData();
