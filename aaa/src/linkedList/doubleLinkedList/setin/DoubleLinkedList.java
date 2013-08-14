@@ -1,13 +1,18 @@
 /**
  * 
+ * 노드는 노드의 앞과 노드의 끝을 가지고있어야한다.
+ * 
+ * 
+ * 
+ * 
  */
-package linkedList.singleLinkedList.setin;
+package linkedList.doubleLinkedList.setin;
 
 /**
  * @author 두석
  * 
  */
-public class LinkedList<T> {
+public class DoubleLinkedList<T> {
 	private Node<T> node = null;
 	private long size = 0;
 
@@ -38,13 +43,6 @@ public class LinkedList<T> {
 			getLast().next = dataNode;
 		}
 		plusSize();
-	}
-	
-	/**
-	 * 특정위치에 새로운 노드를 삽입
-	 */
-	public void add(int index) {
-
 	}
 
 	/**
@@ -111,24 +109,25 @@ public class LinkedList<T> {
 		int count = 0;
 		boolean checkIndex = false;
 		Node<T> pNode = node;
-		if (index == 0) {
-			this.node = node.next;
-		} else {
-			for (int i = 0; i <= index; i++) {
-				if (i == index) {
-					pNode.next = node.next;
-					checkIndex = true;
-					break;
-				}
-				pNode = node;
-				node = node.next;
+		for (int i = 0; i <= index; i++) {
+			if (i == index) {
+				pNode.next = node.next;
+				checkIndex = true;
+				this.size--;
+				break;
 			}
+			pNode = node;
+			node = node.next;
 		}
-		minusSize();
 		return checkIndex;
 	}
 
-	
+	/**
+	 * 특정위치에 새로운 노드를 삽입
+	 */
+	public void insertAfter() {
+
+	}
 
 	/**
 	 * 메인 테스트
@@ -147,7 +146,7 @@ public class LinkedList<T> {
 		 * 삭제한다. 5. 해당 노드가 삭제되었는지 확인한다. 6. 삭제 위치를 인덱스보다 크게해서 Exception을 발생시킨다.
 		 */
 
-		LinkedList<String> stringList = new LinkedList<>();
+		DoubleLinkedList<String> stringList = new DoubleLinkedList<>();
 		stringList.add("최두석");
 		stringList.add("임정은");
 		stringList.add("정대원");
@@ -170,10 +169,11 @@ public class LinkedList<T> {
 
 		stringList.printData(); // 삭제됬는지 확인
 
+		//TODO 0번째 리스트를 삭제하는 경우 제대로 동작이 되지 않음.
 		stringList.delete(0);
-
+		
 		stringList.printData();
-
+		
 		stringList.emptyList();
 
 		stringList.printData();
