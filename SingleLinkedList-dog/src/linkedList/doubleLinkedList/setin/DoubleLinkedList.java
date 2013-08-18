@@ -131,6 +131,8 @@ public class DoubleLinkedList<T> {
 			removeNode.nextNode = null;
 
 		}
+		
+		 decreaseSize();
 
 	}
 
@@ -213,27 +215,6 @@ public class DoubleLinkedList<T> {
 		this.listSize = 0;
 	}
 
-	/**
-	 * 리스트 삭제 특정위치의 노드를 삭제한다.
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public void remove(final int index) {
-
-		validIndex(index);
-		/*
-		 * Node<T> node = this.head; Node<T> pNode = node; if (index == 0) {
-		 * this.head = node.nextNode; } else { for (int i = 0; i <= index; i++)
-		 * { if (i == index) { pNode.nextNode = node.nextNode; break; } pNode =
-		 * node; node = node.nextNode; } }
-		 */
-
-		Node<T> removeNode = getNode(index);
-
-		decreaseSize();
-	}
-
 	@Override
 	public String toString() {
 		Node<T> pNode = this.head;
@@ -261,6 +242,7 @@ public class DoubleLinkedList<T> {
 		}
 	}
 
+	
 	/**
 	 * 메인 테스트
 	 * 
