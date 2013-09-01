@@ -18,7 +18,7 @@ module CALC
   end
 
   # check priority
-  def self.is_prior tokenA, tokenB
+  def self.prior? tokenA, tokenB
     @@operators[tokenA] > @@operators[tokenB]
   end
 
@@ -41,7 +41,7 @@ module CALC
           break if start_paren? op
         end
         next # continue current token
-      elsif is_prior stack.last, token
+      elsif prior? stack.last, token
         postfix << stack.pop
       end
 
@@ -108,8 +108,7 @@ module CALC
   end
 
   def self.run str
-    tokens = lexer str
-    calc tokens
+    calc(lexer str)
   end
 
 end
