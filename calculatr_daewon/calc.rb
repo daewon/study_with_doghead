@@ -112,3 +112,9 @@ module CALC
   end
 
 end
+
+c = gets.chomp
+while c != "q"
+  puts "anser: #{CALC::run c}"
+  c = gets.chomp
+end
