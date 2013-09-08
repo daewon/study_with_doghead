@@ -30,6 +30,7 @@ module CALC
       token = infix.pop
 
       if not operator? token
+
         postfix << token ; next # continue if token is not operator
       elsif stack.empty? or start_paren? token or start_paren? stack.last
         # do nothing
@@ -113,8 +114,8 @@ module CALC
 
 end
 
-c = gets.chomp
-while c != "q"
-  puts "anser: #{CALC::run c}"
-  c = gets.chomp
-end
+# c = gets.chomp
+# while c != "q"
+#   puts "anser: #{CALC::run c}"
+#   c = gets.chomp
+# end
