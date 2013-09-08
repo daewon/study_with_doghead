@@ -25,10 +25,10 @@ public class TestDsCalculator {
 	public void makePostFix(){
 		DsCalculator calc = new DsCalculator();
 		
-		assertThat("100 200 300*+" , is(calc.toPostFix("100+200*300")));
-		assertThat(" 172.32 83 + 49*" , is(calc.toPostFix("(172.32+83)*49")));
-		assertThat("172.32 83 49*+" , is(calc.toPostFix("172.32+83*49")));
-		assertThat(calc.toPostFix("((12+13)*10)+20") , is("  12 13 + 10 * 20+"));
+		assertThat("100 200 300 * +" , is(calc.toPostFix("100+200*300")));
+		assertThat(calc.toPostFix("(172.32+83)*49") , is("172.32 83 + 49 *"));
+		assertThat(calc.toPostFix("172.32+83*49") , is("172.32 83 49 * +"));
+		assertThat(calc.toPostFix("((12+13)*10)+20") , is("12 13 + 10 * 20 +"));
 		assertThat(calc.toPostFix("(((12+13)*10)/20)") , is("12 13 + 10 * 20 /"));
 		
 		
