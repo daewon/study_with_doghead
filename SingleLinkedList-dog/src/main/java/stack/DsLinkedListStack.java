@@ -27,21 +27,24 @@ public class DsLinkedListStack<T> {
 
 		Node<T> newNode = new Node<T>(data);
 
-		if(this.top == null){
+		if (this.top == null) {
 			this.top = newNode;
-		}else{
+		} else {
 			newNode.next = this.top;
 			this.top = newNode;
 		}
-		
+
 	}
 
-	public Node<T> pop() {
+	public T pop() {
+
+		T returnValue = null;
 		Node<T> popNode = this.top;
-		if(popNode != null){
+		if (popNode != null) {
 			this.top = popNode.next;
+			returnValue = popNode.getValue();
 		}
-		return popNode;
+		return returnValue;
 	}
 
 	public Node<T> lastNode() {
@@ -52,6 +55,19 @@ public class DsLinkedListStack<T> {
 			oldTop = oldTop.next;
 		}
 		return oldTop;
+	}
+
+	public boolean isEmpty() {
+
+		boolean isEmpty = false;
+		if (this.top == null) {
+			isEmpty = true;
+		} else {
+			isEmpty = false;
+		}
+
+		return isEmpty;
+
 	}
 
 	public static void main(String[] args) {
