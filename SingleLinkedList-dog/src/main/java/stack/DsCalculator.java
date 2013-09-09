@@ -1,5 +1,8 @@
 package stack;
 
+import java.math.BigDecimal;
+import java.util.StringTokenizer;
+
 /**
  * 스택을 이용한 계산기.
  * 
@@ -76,11 +79,10 @@ public class DsCalculator {
 					case MULTIPLE:
 					case LEFT_PARENTHESIS:
 
-						
-						if(LEFT_PARENTHESIS != token){
+						if (LEFT_PARENTHESIS != token) {
 							isEndNumber = true;
 						}
-						
+
 						/**
 						 * 토큰이 연산자(괄호 포함)인 경우, 스택의 최상위 노드에 담겨있는 연산자가 토큰보다 우선순위가
 						 * 높은지를 검사한다.
@@ -108,7 +110,7 @@ public class DsCalculator {
 							if (tokenPriority < poppedPriority) {
 								sb.append(SPACE);
 								sb.append(poppedOperator);
-							}else{
+							} else {
 								stack.push(poppedOperator);
 								break;
 							}
@@ -133,25 +135,82 @@ public class DsCalculator {
 					default:
 						break;
 				}
-				
-				if(isEndNumber){
+
+				if (isEndNumber) {
 					sb.append(SPACE);
 				}
 
 			}
 
 		}
-		
-		while(!stack.isEmpty()){
+
+		while (!stack.isEmpty()) {
 			sb.append(SPACE);
 			sb.append(stack.pop());
 		}
 		return sb.toString();
 	}
-	// test2
 
-	// test3
+	/**
+	 * postFix = sperator 가 space 인 문자열
+	 * 
+	 * @param postFix
+	 * @return
+	 */
+	public BigDecimal calculate(String postFix) {
+		BigDecimal returnValue = null;
 
-	// test4
+		if (postFix != null) {
+
+			StringTokenizer st = new StringTokenizer(postFix, " ");
+			DsLinkedListStack<String> stack = new DsLinkedListStack<String>();
+			while (st.hasMoreElements()) {
+
+				String token = st.nextToken();
+
+				boolean isOperator = false;
+				switch (token) {
+					case "+":
+					case "-":
+					case "*":
+					case "/":
+						isOperator = true;
+						break;
+				}
+
+				if (!isOperator) {
+					stack.push(token);
+				} else {
+
+					String firstNumber = stack.pop();
+					String secondNumber = stack.pop();
+
+					BigDecimal first = new BigDecimal(firstNumber);
+					BigDecimal second = new BigDecimal(secondNumber);
+
+					BigDecimal calc = null;
+					switch (token) {
+						case "+":
+							calc = second.add(first);
+							break;
+						case "-":
+							calc = second.subtract(first);
+							break;
+						case "*":
+							calc = second.multiply(first);
+							break;
+						case "/":
+							calc = second.divide(first);
+							break;
+					}
+					if (calc != null) {
+						stack.push(calc.toString());
+					}
+				}
+			}
+			returnValue = new BigDecimal(stack.pop());
+		}
+		return returnValue;
+	}
 
 }
