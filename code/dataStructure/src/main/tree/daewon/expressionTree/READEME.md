@@ -1,0 +1,1 @@
+rspec -p spec
