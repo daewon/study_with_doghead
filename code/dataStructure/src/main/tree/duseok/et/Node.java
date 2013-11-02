@@ -1,4 +1,4 @@
-package tree.duseok;
+package tree.duseok.et;
 
 public class Node<T> {
 
