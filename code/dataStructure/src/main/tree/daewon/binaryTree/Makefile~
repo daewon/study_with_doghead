@@ -1,0 +1,3 @@
+cc: javac
+all:
+	cc *.java
