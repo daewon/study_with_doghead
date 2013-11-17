@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="dataStructure/src/main"/>
+	<classpathentry kind="src" path="algorithm/src/main"/>
+	<classpathentry kind="src" path="algorithm/src/test"/>
 	<classpathentry kind="src" path="dataStructure/src/test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/hamcrest-all-1.3.jar"/>
