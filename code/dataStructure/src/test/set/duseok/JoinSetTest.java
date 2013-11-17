@@ -2,13 +2,12 @@ package set.duseok;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import set.duseok.JoinSet.Set;
-import set.duseok.JoinSet;
 
 public class JoinSetTest {
 
@@ -43,10 +42,19 @@ public class JoinSetTest {
 		joinSet.unionSet(set1, set3);
 		assertThat(joinSet.findSet(set1), is(joinSet.findSet(set3)));
 	}
+	
 	@Test
 	public void 비교4(){
 		joinSet.unionSet(set3, set4);
 		assertThat(joinSet.findSet(set3), is(joinSet.findSet(set4)));
+	}
+	
+	@Test
+	public void 비교5(){
+		joinSet.unionSet(set1, set2);
+		joinSet.unionSet(set2, set3);
+		joinSet.unionSet(set2, set4);
+		assertThat(joinSet.findSet(set1), is(joinSet.findSet(set4)));
 	}
 	
 	
