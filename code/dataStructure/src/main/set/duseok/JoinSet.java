@@ -1,15 +1,15 @@
 package set.duseok;
 
 public class JoinSet<T> {
-	public class Set {
-		private Set parent;
+	public class Set<T> {
+		private Set<T> parent;
 		private T data;
 
-		public Set getParent() {
+		public Set<T> getParent() {
 			return parent;
 		}
 
-		public void setParent(Set parent) {
+		public void setParent(Set<T> parent) {
 			this.parent = parent;
 		}
 
@@ -23,20 +23,20 @@ public class JoinSet<T> {
 
 	}
 
-	public void unionSet(Set set1, Set set2) {
+	public void unionSet(Set<T> set1, Set<T> set2) {
 		set2 = findSet(set2);
 		set2.setParent(set1);
 	}
 
-	public Set findSet(Set set) {
+	public Set<T> findSet(Set<T> set) {
 		while (set.getParent() != null) {
 			set = set.getParent();
 		}
 		return set;
 	}
 
-	public Set makeSet(T data) {
-		Set newSet = new Set();
+	public Set<T> makeSet(T data) {
+		Set<T> newSet = new Set<T>();
 		newSet.setData(data);
 		return newSet;
 	}
