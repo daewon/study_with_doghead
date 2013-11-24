@@ -7,10 +7,10 @@ public class InsertSort {
   }
 
   static void sortInRange(int[] arr, int range) {
-    int value = arr[range];
+    int value = arr[range]; // 현재 비교할 값
     for (int i=0; i < range; i++) {
       int n = arr[i];
-      if (value < n ) {
+      if (value < n ) { // 현재 값을 정렬된 위치에 넣는다
         shift(arr, i, range);
         arr[i] = value;
         break;
@@ -20,6 +20,7 @@ public class InsertSort {
 
   static void sort(int[] arr) {
     for (int i=1; i < arr.length; i++) {
+      if (arr[i-1] < arr[i]) { continue; }
       sortInRange(arr, i);
     }
   }
