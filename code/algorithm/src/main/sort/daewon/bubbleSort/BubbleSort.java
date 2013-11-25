@@ -1,12 +1,15 @@
 public class BubbleSort {
   static void sort(int[] arr) {
-    for(int i=0; i<arr.length -1; i++) {
-      for(int j=i+1; j<arr.length; j++) {
+    boolean keep = true;
+    while(keep) {
+      keep = false;
+      for(int i=0; i < arr.length -1 ; i++) {
         int l = arr[i];
-        int r = arr[j];
+        int r = arr[i+1];
         if (l > r) {
           arr[i] = r;
-          arr[j] = l;
+          arr[i+1] = l;
+          keep = true;
         }
       }
     }
@@ -25,7 +28,7 @@ public class BubbleSort {
   }
 
   public static void main(String[] args) {
-    int[] ints = {5, 1, 6, 4, 2, 3};
+    int[] ints = {6, 5, 4, 3, 2, 1, 2, 3, 4, 5};
     print(ints);
     sort(ints);
     print(ints);
