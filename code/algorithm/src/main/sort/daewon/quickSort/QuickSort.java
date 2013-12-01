@@ -8,11 +8,7 @@ public class QuickSort {
       int l = arr[i];
       int r = arr[j];
 
-      if (l < pivot && r > pivot) {
-        i++;
-        j--;
-        continue;
-      } else if (l < pivot && r < pivot)  {
+      if (l < pivot && r < pivot)  {
         i++;
         continue;
       } else if (l > pivot && r > pivot) {
@@ -21,10 +17,10 @@ public class QuickSort {
       } else if (l > pivot && r < pivot) {
         arr[i] = r;
         arr[j] = l;
-        i++;
-        j--;
-        continue;
       }
+
+      i++;
+      j--;
     }
     arr[e] = arr[i];
     arr[i] = pivot;
