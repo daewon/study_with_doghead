@@ -29,7 +29,8 @@ public class QuickSort {
   }
 
   static void sortInRange(int[] arr, int s, int e) {
-    if (e - s < 1)  { return; }
+    if (e - s <= 1)  { return; }
+
     int p = partition(arr, s, e);
     sortInRange(arr, s, p-1);
     sortInRange(arr, p+1, e);
