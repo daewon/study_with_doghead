@@ -3,9 +3,18 @@ package heap.duseok;
 public class Heap {
 
 	class TagHeapNode{
+		public TagHeapNode(int capacity) {
+			nodes = new int[capacity];
+		}
 		int[] nodes;
-		int capacity;
-		int usedSize;
+		int capacity = 0 ;
+		int usedSize = 0;
+	}
+	
+	public TagHeapNode tagHeap;
+	
+	public Heap(int capacity) {
+		tagHeap = new TagHeapNode(capacity);
 	}
 	
 	
@@ -35,6 +44,8 @@ public class Heap {
 			currentPosition = parentPosition;
 			parentPosition = getParent(currentPosition);		
 		}
+		
+		tagHeap.usedSize++;
 	}
 	
 	public void swapNodes(TagHeapNode tagHeap, int currentPosition, int parentPosition){
@@ -48,5 +59,30 @@ public class Heap {
 		return (int)(index-1)/2;
 	}
 	
+	public int getLeftChild(int index){
+		return (2 * index) + 1;
+	}
 	
+	void printNode(TagHeapNode tagHeap){
+		int i = 0 ; 
+		for(i = 0; i < tagHeap.usedSize; i++){
+			System.out.printf("%d " , tagHeap.nodes[i]);
+		}
+		System.out.println("");
+	}
+	
+	public static void main(String[] args) {
+		
+		Heap heap = new Heap(3);
+		
+		heap.heapInsert(heap.tagHeap, 12);
+		heap.heapInsert(heap.tagHeap, 87);
+		heap.heapInsert(heap.tagHeap, 111);
+		heap.heapInsert(heap.tagHeap, 34);
+		heap.heapInsert(heap.tagHeap, 16);
+		heap.heapInsert(heap.tagHeap, 75);
+		
+		heap.printNode(heap.tagHeap);
+		
+	}
 }
