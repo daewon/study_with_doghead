@@ -1,26 +1,30 @@
 package stack.duseok;
 
+/**
+ * LinkedList 로 구현된 스택
+ * @param <T>
+ */
 public class DsLinkedListStack<T> {
 
 	private Node<T> top = null;
 
-	@SuppressWarnings("hiding")
-	public class Node<T> {
-		private T data;
-		Node<T> next = null;
+	public static void main(String[] args) {
+		DsLinkedListStack<Integer> stack = new DsLinkedListStack<Integer>();
 
-		public Node(T data) {
-			this.data = data;
+		stack.push(1);
+		stack.push(2);
+		stack.push(3);
+		stack.push(4);
+		stack.push(5);
+		stack.push(6);
+		stack.push(7);
+
+		Object pop;
+		while ((pop = stack.pop()) != null) {
+
+			System.out.println(pop);
 		}
 
-		public T getValue() {
-			return this.data;
-		}
-
-		@Override
-		public String toString() {
-			return getValue().toString();
-		}
 	}
 
 	public void push(T data) {
@@ -70,23 +74,23 @@ public class DsLinkedListStack<T> {
 
 	}
 
-	public static void main(String[] args) {
-		DsLinkedListStack<Integer> stack = new DsLinkedListStack<Integer>();
+	@SuppressWarnings("hiding")
+	public class Node<T> {
+		Node<T> next = null;
+		private T data;
 
-		stack.push(1);
-		stack.push(2);
-		stack.push(3);
-		stack.push(4);
-		stack.push(5);
-		stack.push(6);
-		stack.push(7);
-
-		Object pop;
-		while ((pop = stack.pop()) != null) {
-
-			System.out.println(pop);
+		public Node(T data) {
+			this.data = data;
 		}
 
+		public T getValue() {
+			return this.data;
+		}
+
+		@Override
+		public String toString() {
+			return getValue().toString();
+		}
 	}
 
 }

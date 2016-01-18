@@ -5,9 +5,8 @@ import java.util.StringTokenizer;
 
 /**
  * 스택을 이용한 계산기.
- * 
+ *
  * @author 두석
- * 
  */
 public class DsCalculator {
 
@@ -20,7 +19,14 @@ public class DsCalculator {
 	final static char DOT = '.';
 	final static char SPACE = ' ';
 
-	public int Priority(Character operator, boolean isLeftParenthesis) {
+	/**
+	 * 우선순위 값 가져오기
+	 *
+	 * @param operator
+	 * @param isLeftParenthesis
+	 * @return
+	 */
+	public int getPriority(Operator operator, boolean isLeftParenthesis) {
 		int priority = -1;
 		switch (operator) {
 			case DIVIDE:
@@ -40,10 +46,15 @@ public class DsCalculator {
 				break;
 
 		}
-
 		return priority;
 	}
 
+	/**
+	 * 현재 문자가 숫자인지 검사.
+	 *
+	 * @param character
+	 * @return
+	 */
 	public boolean isNumber(Character character) {
 		boolean isNumber = true;
 		try {
@@ -67,6 +78,7 @@ public class DsCalculator {
 		for (int i = 0; i < length; i++) {
 			isEndNumber = false;
 			Character token = infix.charAt(i);
+
 			// 숫자이면 더하기
 			if (isNumber(token) || DOT == token) {
 				sb.append(token);
@@ -86,10 +98,10 @@ public class DsCalculator {
 						/**
 						 * 토큰이 연산자(괄호 포함)인 경우, 스택의 최상위 노드에 담겨있는 연산자가 토큰보다 우선순위가
 						 * 높은지를 검사한다.
-						 * 
+						 *
 						 * 검사 결과가 참이면 최상위 노드를 스택에서 꺼내 결과에 출력하며, 이 검사 작업을 반복해서
 						 * 수행하되 그 결과가 거짓이거나 스택이 비게 되면 작업을 중단한다.
-						 * 
+						 *
 						 * 검사 작업이 끝난 후에는 토큰을 스택에 삽입한다. ( 이로 인해 스택에는 최상위 노드보다
 						 * 우선순위가 높은 연산자는 존재하지 않게 된다.)
 						 */
@@ -100,11 +112,11 @@ public class DsCalculator {
 							int tokenPriority = -1;
 							int poppedPriority = -1;
 							if (poppedOperator != null) {
-								tokenPriority = Priority(token, true);
-								poppedPriority = Priority(token, false);
+								tokenPriority = getPriority(Operator.getOperator(token), true);
+								poppedPriority = getPriority(Operator.getOperator(token), false);
 							} else {
-								tokenPriority = Priority(token, false);
-								poppedPriority = Priority(token, false);
+								tokenPriority = getPriority(Operator.getOperator(token), false);
+								poppedPriority = getPriority(Operator.getOperator(token), false);
 							}
 
 							if (tokenPriority < poppedPriority) {
@@ -153,11 +165,11 @@ public class DsCalculator {
 
 	/**
 	 * postFix = sperator 가 space 인 문자열
-	 * 
+	 *
 	 * @param postFix
 	 * @return
 	 */
-	public BigDecimal calculate(String postFix) {
+	public BigDecimal calculate(String postFix) throws Exception {
 		BigDecimal returnValue = null;
 
 		if (postFix != null) {
@@ -168,17 +180,8 @@ public class DsCalculator {
 
 				String token = st.nextToken();
 
-				boolean isOperator = false;
-				switch (token) {
-					case "+":
-					case "-":
-					case "*":
-					case "/":
-						isOperator = true;
-						break;
-				}
-
-				if (!isOperator) {
+				Operator operator = Operator.getOperator(token);
+				if (operator != null) {
 					stack.push(token);
 				} else {
 
@@ -189,19 +192,22 @@ public class DsCalculator {
 					BigDecimal second = new BigDecimal(secondNumber);
 
 					BigDecimal calc = null;
-					switch (token) {
-						case "+":
+					switch (operator) {
+						case PLUS:
 							calc = second.add(first);
 							break;
-						case "-":
+						case MINUS:
 							calc = second.subtract(first);
 							break;
-						case "*":
+						case MULTIPLE:
 							calc = second.multiply(first);
 							break;
-						case "/":
+						case DIVIDE:
 							calc = second.divide(first);
 							break;
+						default:
+							throw new Exception("허용되지 않는 연산자입니다.");
+
 					}
 					if (calc != null) {
 						stack.push(calc.toString());
@@ -211,6 +217,58 @@ public class DsCalculator {
 			returnValue = new BigDecimal(stack.pop());
 		}
 		return returnValue;
+	}
+
+	enum Operator {
+		PLUS("+", '+'),
+		MINUS("-", '-'),
+		MULTIPLE("*", '*'),
+		DIVIDE("/", '/'),
+		LEFT_PARENTHESIS("(", '('),
+		RIGHT_PARENTHESIS(")", ')'),
+		DOT(".", '.'),
+		SPACE(" ", ' ');
+		String operatorString;
+		char operatorChar;
+
+		Operator(String operator, char operatorChar) {
+			this.operatorString = operator;
+			this.operatorChar = operatorChar;
+		}
+
+		public static Operator getOperator(char operatorChar) {
+			Operator[] operators = Operator.values();
+
+			for (Operator operator :
+					operators) {
+				if (operator.getOperatorChar() == operatorChar) {
+					return operator;
+				}
+			}
+			return null;
+		}
+
+		public static Operator getOperator(String operatorString) {
+			Operator[] operators = Operator.values();
+
+			for (Operator operator :
+					operators) {
+				if (operatorString.equals(operator.getOperatorString())) {
+					return operator;
+				}
+			}
+			return null;
+		}
+
+		public String getOperatorString() {
+			return operatorString;
+		}
+
+		public char getOperatorChar() {
+			return operatorChar;
+		}
+
+
 	}
 
 }
